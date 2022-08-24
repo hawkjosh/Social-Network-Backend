@@ -27,14 +27,14 @@ module.exports = {
     .then((thought) => {
       return User.findOneAndUpdate(
         { username: req.body.username },
-        { $push: { thoughts: thought._id } }
-        // { new: true }
+        { $push: { thoughts: thought._id } },
+        { new: true }
       );
     })
     .then((thought) => 
       !thought
         ? res.status(404).json({ message: '⚠️ Thought created, but no user found with that username' })
-        : res.json('✅ Thought successfully created and associated with user')
+        : res.json(thought)
     )
     .catch((err) => res.status(500).json(err));
   },
@@ -44,7 +44,6 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body }
-      // { runValidators: true, new: true }
     )
     .then((thought) =>
       !thought
@@ -75,14 +74,12 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $push: { reactions: req.body } }
-      // { runValidators: true, new: true }
     )
     .then((thought) => 
       !thought
         ? res.status(404).json({ message: '⛔ Sorry, no thought was found with that ID' })
         : res.json({ message: '✅ Reaction has been successfully added' })
     )
-    .then((thought) => res.json(thought))
     .catch((err) => res. status(500).json(err));
   },
 
@@ -91,7 +88,6 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: req.body } }
-      // { runValidators: true, new: true }
     )
     .then((thought) => 
       !thought

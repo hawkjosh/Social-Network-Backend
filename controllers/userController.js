@@ -25,7 +25,7 @@ module.exports = {
   // Route to create a user
   createUser(req, res) {
     User.create(req.body)
-    .then(() => res.json({ message: '✅ User has been successfully created' }))
+    .then((user) => res.json(user))
     .catch((err) => res.status(500).json(err));
   },
 
@@ -34,7 +34,6 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body }
-      // { runValidators: true, new: true }
     )
     .then((user) =>
       !user
@@ -65,7 +64,6 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $push: { friends: req.params.friendId } }
-      // { runValidators: true, new: true }
     )
     .then((user) => 
       !user
@@ -80,7 +78,6 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $pull: { friends: req.params.friendId } }
-      // { runValidators: true, new: true }
     )
     .then((user) => 
       !user
