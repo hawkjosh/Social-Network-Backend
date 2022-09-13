@@ -1,4 +1,4 @@
-# module18-social-network-challenge
+# Social-Network-Backend
 
 ## Description
 
